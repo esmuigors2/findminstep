@@ -99,21 +99,6 @@ def crudecycle(unisteps):
     else:
         return 0
 
-# SHA-A-A-AMEFUL PIECE OF CODE O(N^2)
-#def thoroughcycle(y):
-#    #[ yy for yy in y if yy > 0.0 ])
-#    h = [ yy for yy in y if yy > zerothresh ]
-#    repe = [ [ k for k, v in enumerate(h) if v == vaa ] for vaa in h ]
-#    repesteps = dict(zip(xrange(0,len(h)),repe))
-##    print("###Repesteps: ")
-##    print(repesteps)
-##    print(repe)
-#    maxtelen = 1
-#    for u in list(repesteps):
-#        if len(repesteps[u]) > maxtelen:
-#            maxtelen = len(repesteps[u])
-#    return maxtelen
-
 def thoroughcycle(y):
     #[ yy for yy in y if yy > 0.0 ])
     h = [ yy for yy in y if yy > zerothresh ]
@@ -511,9 +496,6 @@ def main():
         if len(restargs) > 1:
             energias.pop() # otherwise the input from multiple files will be quite messy
     caviaro = nstep
-#        caviaro = (nstep-1)
- #   else:
-  #      caviaro = nstep
     altogetherst=[]
     altogetherst2=[] 
     if doscpcmconv:
@@ -522,15 +504,6 @@ def main():
     try:
         for muffin in xrange(0,caviaro):
           if not doscpcmconv:
-#        if not is_number(maxforce[muffin]):
-#            maxforce[muffin] = 100500
-#        if not is_number(rmsforce[muffin]):
-#            rmsforce[muffin] = 100500
-#        if not is_number(maxdispl[muffin]):
-#            maxdispl[muffin] = 100500
-#        if not is_number(rmsdispl[muffin]):
-#            rmsdispl[muffin] = 100500
-#        altogetherst[muffin] = round(maxforce[muffin]/convergencie[0]+rmsforce[muffin]/convergencie[1]+maxdispl[muffin]/convergencie[2]+rmsdispl[muffin]/convergencie[3],5)
             try:
               altogetherst.append(round((maxforce[muffin]+rmsforce[muffin]+maxdispl[muffin]+rmsdispl[muffin])/4,5))
             except IndexError:
@@ -540,15 +513,6 @@ def main():
     except NameError:
         for muffin in range(0,caviaro):
           if not doscpcmconv:
-#        if not is_number(maxforce[muffin]):
-#            maxforce[muffin] = 100500
-#        if not is_number(rmsforce[muffin]):
-#            rmsforce[muffin] = 100500
-#        if not is_number(maxdispl[muffin]):
-#            maxdispl[muffin] = 100500
-#        if not is_number(rmsdispl[muffin]):
-#            rmsdispl[muffin] = 100500
-#        altogetherst[muffin] = round(maxforce[muffin]/convergencie[0]+rmsforce[muffin]/convergencie[1]+maxdispl[muffin]/convergencie[2]+rmsdispl[muffin]/convergencie[3],5)
             try:
               altogetherst.append(round((maxforce[muffin]+rmsforce[muffin]+maxdispl[muffin]+rmsdispl[muffin])/4,5))
             except IndexError:
