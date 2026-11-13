@@ -19,7 +19,7 @@ It does the following:
 ---
 
 ## Requirements
-**Python**: Compatible with Python 2.7+ and Python 3.x.
+**Python**: Compatible with Python 2.7+ and Python 3.x. You can try using it on earlier Python versions if needed, and file me the bugs.
 
 **Dependencies** *(optional)*:
 * `natsort`: For natural numerical sorting of multi-file command-line arguments.
