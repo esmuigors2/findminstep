@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# script version 1.8 -- updated and consolidated one
+from __future__ import print_function
 import sys, getopt, re, os
 print("Using the following Python version:")
 print(sys.version)
@@ -192,6 +194,7 @@ def is_number(s):
 # this one is (c) Daniel Goldberg at so.com
 
 def main():
+    #print("Hello, buzzing is " + str(buzzing))
     printsteps = False
     printbeststeps = False
     printacs = False
@@ -343,13 +346,20 @@ def main():
                     exitstat = 1
                     continue
                 else:
-                    if buzzing : print('This is NOT an optimization job! Route is:\n ' + myroute1[2:] + '\nExiting.')
+                    if buzzing : print('This is NOT an optimization job! Route is:\n ' + myroute1[2:], end='')
                     njobslist.append(0)
                     njobslist1.append(0)
                     exitstat = 3
-                    continue
+                    if not doscpcmconv and not 'SC-PCM: Erms=' in allmyout:
+                        continue
+                        print('Exiting.')
+                    else:
+                        print("")
 
         energycoef=0.6
+        if doscpcmconv and 'SC-PCM:' in allmyout:
+            if buzzing : print("This is an SC-PCM job, but not a single iteration has been done! Exiting...")
+            sys.exit(3)
         if doscpcmconv and 'SC-PCM: Erms=' in allmyout:
             energyline=r'SC-PCM: Erms='
             energyword=2
