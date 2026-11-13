@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 # script version 1.8 -- updated and consolidated one
-from __future__ import print_function
 import sys, getopt, re, os
 print("Using the following Python version:")
 print(sys.version)
@@ -151,8 +150,12 @@ def outputsteps(pa,cavi,en,mf,rf,ms,rs,av,ae,ma,ac2=[],ac3=[],ac4=[],ac5=[],ac6=
     global avaispac
     avaispac=int((termcolumns-85)/8) # 85 = 4 + 10 + 6 x 10 + 11 ; previously the first 10 was 12
     if avaispac <= 0: avaispac = 0
-    fstri='{0:-4s}{1:'+str(smuk(10))+'s}{2:'+str(smuk(10))+'s}{3:'+str(smuk(10))+'s}{4:'+str(smuk(10))+'s}{5:'+str(smuk(10))+'s}{6:'+str(smuk(10))+'s}{7:'+str(smuk(10))+'s}{8:'+str(smuk(11))+'s}'
-    print(fstri.format('Step','Energy','Max Force','RMS Force','Max Displ','RMS Displ','Average','Avrg+E','Mov.av.(3)'))
+    try:
+        fstri='{0:-4s}{1:'+str(smuk(10))+'s}{2:'+str(smuk(10))+'s}{3:'+str(smuk(10))+'s}{4:'+str(smuk(10))+'s}{5:'+str(smuk(10))+'s}{6:'+str(smuk(10))+'s}{7:'+str(smuk(10))+'s}{8:'+str(smuk(11))+'s}'
+        print(fstri.format('Step','Energy','Max Force','RMS Force','Max Displ','RMS Displ','Average','Avrg+E','Mov.av.(3)'))
+    except ValueError:
+        fstri='{0:4s}{1:'+str(smuk(10))+'s}{2:'+str(smuk(10))+'s}{3:'+str(smuk(10))+'s}{4:'+str(smuk(10))+'s}{5:'+str(smuk(10))+'s}{6:'+str(smuk(10))+'s}{7:'+str(smuk(10))+'s}{8:'+str(smuk(11))+'s}'
+        print(fstri.format('Step','Energy','Max Force','RMS Force','Max Displ','RMS Displ','Average','Avrg+E','Mov.av.(3)'))
     #print('%-4s%'+str(smuk(12))+'s%'+str(smuk(10))+'s%'+str(smuk(10))+'s%'+str(smuk(10))+'s%'+str(smuk(10))+'s%'+str(smuk(10))+'s%'+str(smuk(10))+'s%'+str(smuk(11))+'s' % ('Step','Energy','Max Force','RMS Force','Max Displ','RMS Displ','Average','Avrg+E','Mov.av.(3)'))
     #print('Avaispac is '+str(avaispac))
     try:
@@ -346,18 +349,18 @@ def main():
                     exitstat = 1
                     continue
                 else:
-                    if buzzing : print('This is NOT an optimization job! Route is:\n ' + myroute1[2:], end='')
+                    if buzzing :
+                        print('This is NOT an optimization job! Route is:\n ' + myroute1[2:])
                     njobslist.append(0)
                     njobslist1.append(0)
                     exitstat = 3
-                    if not doscpcmconv and not 'SC-PCM: Erms=' in allmyout:
+                    if not doscpcmconv or not 'SC-PCM:' in allmyout:
                         continue
-                        print('Exiting.')
                     else:
                         print("")
 
         energycoef=0.6
-        if doscpcmconv and 'SC-PCM:' in allmyout:
+        if doscpcmconv and not 'SC-PCM: Erms=' in allmyout:
             if buzzing : print("This is an SC-PCM job, but not a single iteration has been done! Exiting...")
             sys.exit(3)
         if doscpcmconv and 'SC-PCM: Erms=' in allmyout:
@@ -498,7 +501,7 @@ def main():
 # end of multi-file reading
 
     
-    if len(rmsdispl) == 0 and not doscpcmconv:
+    if len(rmsdispl) == 0 and not doscpcmconv or len(rmsdispl) == 0 and not 'SC-PCM: Erms=' in allmyout:
         if buzzing : print("No data for analysis. Exiting...")
         if exitstat == 0 : exitstat = 3
         sys.exit(exitstat)
